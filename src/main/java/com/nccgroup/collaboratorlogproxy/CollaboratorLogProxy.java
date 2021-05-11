@@ -31,6 +31,8 @@ public class CollaboratorLogProxy {
     private static final String COLLABORATOR_SERVER_ADDRESS = "collaborator_server_address";
     private static final String COLLABORATOR_HTTP_SERVER_PORT = "collaborator_http_server_port";
     private static final String COLLABORATOR_HTTPS_SERVER_PORT = "collaborator_https_server_port";
+    private static final String LOG_PROXY_HTTP_SERVER_PORT = "log_proxy_http_server_port";
+    private static final String LOG_PROXY_HTTPS_SERVER_PORT = "log_proxy_https_server_port";
     private static final String LISTEN_ADDRESS = "listen_address";
     private static final String PRIVATE_KEY_PATH = "ssl_private_key_path";
     private static final String CERTIFICATE_PATH = "ssl_certificate_path";
@@ -80,7 +82,7 @@ public class CollaboratorLogProxy {
 
         httpServer = ServerBootstrap.bootstrap()
                 .setConnectionReuseStrategy(new NoConnectionReuseStrategy())
-                .setListenerPort(80)
+                .setListenerPort(Integer.parseInt(properties.getProperty(LOG_PROXY_HTTP_SERVER_PORT)))
                 .setLocalAddress(listenAddress)
                 .setExceptionLogger(ex -> {
                     if(ex instanceof SSLException){
@@ -94,7 +96,7 @@ public class CollaboratorLogProxy {
 
         httpsServer = ServerBootstrap.bootstrap()
                 .setConnectionReuseStrategy(new NoConnectionReuseStrategy())
-                .setListenerPort(443)
+                .setListenerPort(Integer.parseInt(properties.getProperty(LOG_PROXY_HTTPS_SERVER_PORT)))
                 .setLocalAddress(listenAddress)
                 .setExceptionLogger(ex -> {
                     if(ex instanceof SSLException){
@@ -171,6 +173,8 @@ public class CollaboratorLogProxy {
         defaultProperties.setProperty(COLLABORATOR_SERVER_ADDRESS, "127.0.0.1");
         defaultProperties.setProperty(COLLABORATOR_HTTP_SERVER_PORT, "81");
         defaultProperties.setProperty(COLLABORATOR_HTTPS_SERVER_PORT, "444");
+        defaultProperties.setProperty(LOG_PROXY_HTTP_SERVER_PORT, "80");
+        defaultProperties.setProperty(LOG_PROXY_HTTPS_SERVER_PORT, "443");
         defaultProperties.setProperty(LISTEN_ADDRESS, "0.0.0.0");
         defaultProperties.setProperty(PRIVATE_KEY_PATH, "/certs/key.pem.pkcs8");
         defaultProperties.setProperty(CERTIFICATE_PATH, "/certs/cert.crt");
