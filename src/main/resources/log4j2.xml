@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration strict="true" name="default"
+               packages="com.nccgroup.collaboratorlogproxy">
+    <Appenders>
+        <Appender type="Console" name="STDOUT">
+            <Layout type="PatternLayout" pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss} %msg%n" />
+        </Appender>
+    </Appenders>
+
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="STDOUT"/>
+        </Root>
+    </Loggers>
+
+</Configuration>

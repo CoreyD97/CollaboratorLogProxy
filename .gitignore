@@ -4,5 +4,4 @@ build/
 out/
 keys/
 *.burp
-LogProxy.properties
 releases/
