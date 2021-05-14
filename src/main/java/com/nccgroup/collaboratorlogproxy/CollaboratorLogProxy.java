@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.appender.FileAppender;
 import org.apache.logging.log4j.core.appender.RollingFileAppender;
+import org.apache.logging.log4j.core.appender.rolling.DefaultRolloverStrategy;
 import org.apache.logging.log4j.core.appender.rolling.SizeBasedTriggeringPolicy;
 import org.apache.logging.log4j.core.appender.rolling.TimeBasedTriggeringPolicy;
 import org.apache.logging.log4j.core.config.Configuration;
@@ -51,6 +52,7 @@ public class CollaboratorLogProxy {
     private static final String LOG_LEVEL = "log_level";
     private static final String LOG_DIR = "log_directory";
     private static final String ROLLING_LOGS = "rolling_logs";
+    private static final String ROLLING_LOGS_MAX_DAYS = "rolling_logs_max_backup_days";
 
     private HttpServer httpServer;
     private HttpServer httpsServer;
@@ -178,6 +180,7 @@ public class CollaboratorLogProxy {
                             .withFileName(config.getString(LOG_DIR) + "/LogProxy.log")
                             .withFilePattern(config.getString(LOG_DIR) + "/$${date:yyyy-MM}/LogProxy-%d{yyyy-MM-dd}-%i.log.gz")
                             .withPolicy(TimeBasedTriggeringPolicy.newBuilder().withInterval(1).build())
+                            .withStrategy(DefaultRolloverStrategy.newBuilder().withMax(config.getString(ROLLING_LOGS_MAX_DAYS)).build())
                             .setConfiguration(logConfig)
                             .setLayout(logLayout)
                             .build();
